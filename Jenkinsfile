@@ -1,6 +1,9 @@
 node {
-  stage('clear work space'){
+  stage('clear work space') {
     cleanWs()
+  }
+  stage('test') {
+    sh 'echo "test"'
   }
   stage('pull artifact') {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus',
