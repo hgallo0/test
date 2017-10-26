@@ -2,13 +2,12 @@ node {
   stage('clear work space') {
     cleanWs()
   }
-  stage('test') {
-    sh 'echo "test"'
-  }
+
   stage('pull repo') {
     git credentialsId: 'githgallo',
     url: 'https://github.com/hgallo0/test.git'
   }
+
   stage('pull artifact') {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus',
                   usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
@@ -17,17 +16,12 @@ node {
       sh 'curl -GET -u  ${USERNAME}:${PASSWORD} "http://nexus-2040588938.ca-central-1.elb.amazonaws.com/repository/hgallotest/nexus/spring-boot-rest-example/master-build-6/spring-boot-rest-example-master-build-6.jar" -O'
     }
   }
-  stage('view downloaded file') {
-    sh 'ls -ltr'
-    sh 'pwd'
-  }
-  stage("deploy") {
 
-      pushToCloudFoundry cloudSpace: 'stage',
+  stage("deploy") {
+    pushToCloudFoundry cloudSpace: 'stage',
                        credentialsId: 'pws',
                        organization: 'Spinnaker_POC',
                        selfSigned: true,
                        target: 'https://api.run.pivotal.io'
-
   }
 }
