@@ -1,6 +1,6 @@
 node {
   environment {
-    REPO="http://nexus-2040588938.ca-central-1.elb.amazonaws.com/repository/hgallotest/"
+    def REPO="http://nexus-2040588938.ca-central-1.elb.amazonaws.com/repository/hgallotest/"
   }
   stage('clear work space') {
     cleanWs()
