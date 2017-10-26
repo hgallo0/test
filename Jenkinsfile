@@ -5,6 +5,10 @@ node {
   stage('test') {
     sh 'echo "test"'
   }
+  stage('pull repo') {
+    git credentialsId: 'githgallo',
+    url: 'https://github.com/hgallo0/test.git'
+  }
   stage('pull artifact') {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'nexus',
                   usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
@@ -14,16 +18,16 @@ node {
     }
   }
   stage('view downloaded file') {
-    sh 'ls -ltr ../'
+    sh 'ls -ltr'
     sh 'pwd'
   }
   stage("deploy") {
-    dir('../') {
+
       pushToCloudFoundry cloudSpace: 'stage',
                        credentialsId: 'pws',
                        organization: 'Spinnaker_POC',
                        selfSigned: true,
                        target: 'https://api.run.pivotal.io'
-     }
+
   }
 }
