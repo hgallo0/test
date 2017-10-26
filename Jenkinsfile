@@ -18,10 +18,12 @@ node {
     sh 'pwd'
   }
   stage("deploy") {
-    pushToCloudFoundry cloudSpace: 'stage',
+    dir('../') {
+      pushToCloudFoundry cloudSpace: 'stage',
                        credentialsId: 'pws',
                        organization: 'Spinnaker_POC',
                        selfSigned: true,
                        target: 'https://api.run.pivotal.io'
+     }
   }
 }
