@@ -16,7 +16,9 @@ node {
       sh 'curl -GET -u  ${USERNAME}:${PASSWORD} "http://nexus-2040588938.ca-central-1.elb.amazonaws.com/repository/hgallotest/nexus/spring-boot-rest-example/master-build-6/spring-boot-rest-example-master-build-6.jar" -O'
     }
   }
-
+  stage('show files') {
+    sh 'ls -ltr'
+  }
   stage("deploy") {
     pushToCloudFoundry cloudSpace: 'stage',
                        credentialsId: 'pws',
