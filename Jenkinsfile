@@ -14,7 +14,7 @@ node {
     }
   }
   stage('view downloaded file') {
-    sh 'ls -ltr'
+    sh 'ls -ltr ../'
     sh 'pwd'
   }
   stage("deploy") {
