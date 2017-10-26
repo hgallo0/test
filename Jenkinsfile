@@ -15,6 +15,7 @@ node {
   }
   stage('view downloaded file') {
     sh 'ls -ltr'
+    sh 'pwd'
   }
   stage("deploy") {
     dir('./testpullpush/') {
