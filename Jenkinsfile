@@ -14,10 +14,12 @@ node {
     }
   }
   stage("deploy") {
-    pushToCloudFoundry cloudSpace: 'stage',
+    dir('./testpullpush/') {
+      pushToCloudFoundry cloudSpace: 'stage',
                        credentialsId: 'pws',
                        organization: 'Spinnaker_POC',
                        selfSigned: true,
                        target: 'https://api.run.pivotal.io'
+     }
   }
 }
